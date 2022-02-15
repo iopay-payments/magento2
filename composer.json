@@ -1,0 +1,24 @@
+{
+    "name": "iopay-payments/magento2",
+    "description": "Venda mais em sua loja magento 2 com a IoPay",
+    "type": "composer-plugin",
+    "version": "1.0.0",
+    "authors": [
+        {
+            "name": "IoPay",
+            "email": "suporte@iopay.com.br"
+        }
+    ],
+    "license": [
+        "OSL-3.0",
+        "AFL-3.0"
+    ],
+    "autoload": {
+        "files": [
+            "registration.php"
+        ],
+        "psr-4": {
+            "IoPay\\Core\\": ""
+        }
+    }
+}
