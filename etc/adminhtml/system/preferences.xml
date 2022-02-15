@@ -1,0 +1,40 @@
+<?xml version="1.0"?>
+<include xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_include.xsd">
+    <group id="iopay_preferences" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+        <label>Configurações Gerais</label>
+        <field id="environment" translate="label" type="select" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="0">
+            <label>Ambiente</label>
+            <config_path>payment/iopay_preferences/environment</config_path>
+            <source_model>IoPay\Core\Model\Config\Source\Environment</source_model>
+        </field>
+        <field id="debug" translate="label" type="select" sortOrder="25" showInDefault="1" showInWebsite="1" showInStore="0">
+            <label>Debug</label>
+            <config_path>payment/iopay_preferences/debug</config_path>
+            <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+        </field>
+        <field id="auto_invoice" translate="label" type="select" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="0">
+            <label>Gerar Invoice</label>
+            <config_path>payment/iopay_preferences/auto_invoice</config_path>
+            <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+            <comment><![CDATA[Habilite para gerar uma fatura automaticamente quando o pagamento for aprovado]]></comment>
+        </field>
+        <field id="logo_checkout" translate="label" type="select" sortOrder="31" showInDefault="1" showInWebsite="1" showInStore="0">
+            <label>Usar logo no Checkout</label>
+            <config_path>payment/iopay_preferences/logo_checkout</config_path>
+            <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+            <comment><![CDATA[Habilite mostrar a logo da IoPay nos métodos de pagamento no checkout]]></comment>
+        </field>
+        <field id="email" translate="label" type="text" sortOrder="35" showInDefault="1" showInWebsite="1" showInStore="0">
+            <label>IoPay Email</label>
+            <config_path>payment/iopay_preferences/email</config_path>
+        </field>
+        <field id="secret" translate="label comment" type="text" sortOrder="40" showInDefault="1" showInWebsite="1" showInStore="0">
+            <label>IoPay Secret</label>
+            <config_path>payment/iopay_preferences/secret</config_path>
+        </field>
+        <field id="seller_id" translate="label comment" type="text" sortOrder="45" showInDefault="1" showInWebsite="1" showInStore="0">
+            <label>IoPay Seller Id</label>
+            <config_path>payment/iopay_preferences/seller_id</config_path>
+        </field>
+    </group>
+</include>

@@ -1,0 +1,124 @@
+.iopay-img-qr {
+    border: 0;
+    vertical-align: top;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.iopay-img-pix {
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 15px;
+}
+
+.logo-iopay {
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 15px;
+}
+
+.container {
+    width: 75%;
+    display: block;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    height: 550px;
+}
+.box {
+    margin-bottom: 0px;
+    box-sizing: border-box;
+    display: flex;
+    margin-left: 33%;
+}
+
+.checkout-onepage-success .iopay-success .container h1 {
+    margin-left: auto;
+    margin-right: auto;
+    color: black;
+    margin-bottom: 30px;
+}
+
+.checkout-onepage-success .iopay-success .container .title {
+    font-size: 14px;
+    font-weight: 600;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 40px;
+}
+
+.checkout-onepage-success .iopay-success .container .subtitles {
+    font-size: 12px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 20px;
+}
+
+@media only screen and (max-width: 770px) {
+    .container {
+        width: 100%;
+        display: block;
+        justify-content: center;
+        align-items: center;
+        flex-wrap: wrap;
+        height: 550px;
+    }
+    .box {
+        margin-bottom: 0px;
+        box-sizing: border-box;
+        display: flex;
+        margin-left: 5%;
+    }
+
+    .checkout-onepage-success .iopay-success .container h1 {
+        margin-left: auto;
+        margin-right: auto;
+        color: black;
+        margin-bottom: 30px;
+    }
+
+    .checkout-onepage-success .iopay-success .container .title {
+        font-size: 14px;
+        font-weight: 600;
+        margin-left: auto;
+        margin-right: auto;
+        margin-top: 40px;
+    }
+
+    .checkout-onepage-success .iopay-success .container .subtitles {
+        font-size: 12px;
+        margin-left: auto;
+        margin-right: auto;
+        margin-bottom: 20px;
+        text-align: center;
+    }
+
+    /* Chackout */
+    #iopay_creditcard-form .cc_cid {
+        width: 100%;
+    }
+    #iopay_creditcard-form {
+        width: 100%;
+    }
+}
+
+/* Checkout */
+#iopay_creditcard-form .cc_cid {
+    width: 20%;
+}
+#iopay_creditcard-form {
+    width: 75%;
+}
+/* Year and Month sizes */
+#iopay_creditcard-form .field .fields.group.group-2 .field {
+    width: 20% !important;
+}
+
+#iopay_creditcard-form .checkout-payment-method .actions-toolbar .primary {
+    float: left !important;
+}
+
+#iopay_creditcard-form .field-tooltip {
+    left: 22%;
+}

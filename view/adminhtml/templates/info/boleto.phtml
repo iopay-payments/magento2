@@ -1,0 +1,14 @@
+<?php
+$method     = $this->getMethod();
+$expiration = $this->getExpirationDate();
+$boletoUrl  = $this->getBoletoUrl();
+?>
+
+<span><strong><?php echo __($this->getTitle()) ?></strong></span>
+
+<?php if ($method == "iopay_boleto"): ?>
+    <br>
+    <span>Pagar até: <?php echo $expiration; ?></span>
+    <hr />
+    <a href="<?php echo $boletoUrl ?>" target="_blank"><span>Imprimir boleto</span></a>
+<?php endif; ?>

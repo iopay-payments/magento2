@@ -1,0 +1,51 @@
+<?xml version="1.0"?>
+<include xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_include.xsd">
+    <group id="iopay_creditcard" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+        <label>IoPay - Cartão de Crédito</label>
+        <field id="active" translate="label" type="select" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="0">
+            <label>Habilitado</label>
+            <config_path>payment/iopay_creditcard/active</config_path>
+            <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+        </field>
+        <field id="title" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+            <label>Título</label>
+            <config_path>payment/iopay_creditcard/title</config_path>
+        </field>
+        <field id="order_status" translate="label" type="select" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="0">
+            <label>Status do Pedido</label>
+            <config_path>payment/iopay_creditcard/order_status</config_path>
+            <source_model>IoPay\Core\Model\Config\Source\Order\Status\Pendingpayment</source_model>
+        </field>
+        <field id="antifraud_plan" translate="label" type="select" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="0">
+            <label>Plano Antifraude</label>
+            <config_path>payment/iopay_creditcard/antifraud_plan</config_path>
+            <source_model>IoPay\Core\Model\Config\Source\Antifraude\Plan</source_model>
+        </field>
+        <field id="antifraud_key" translate="label" type="text" sortOrder="40" showInDefault="1" showInWebsite="1" showInStore="0">
+            <label>Antifraude Key</label>
+            <config_path>payment/iopay_creditcard/antifraud_key</config_path>
+        </field>
+        <field id="installments" translate="label" type="select" sortOrder="50" showInDefault="1" showInWebsite="1" showInStore="0">
+            <label>Parcelamento</label>
+            <config_path>payment/iopay_creditcard/installments</config_path>
+            <source_model>IoPay\Core\Model\Config\Source\Installments</source_model>
+        </field>
+        <field id="allowspecific" translate="label" type="allowspecific" sortOrder="130" showInDefault="1" showInWebsite="1" showInStore="0">
+            <label>Permitidos em Países</label>
+            <config_path>payment/iopay_creditcard/allowspecific</config_path>
+            <source_model>Magento\Payment\Model\Config\Source\Allspecificcountries</source_model>
+        </field>
+        <field id="specificcountry" translate="label" type="multiselect" sortOrder="140" showInDefault="1" showInWebsite="1" showInStore="0">
+            <label>Países Específicos</label>
+            <source_model>Magento\Directory\Model\Config\Source\Country</source_model>
+            <can_be_empty>1</can_be_empty>
+            <config_path>payment/iopay_creditcard/specificcountry</config_path>
+        </field>
+
+        <field id="sort_order" translate="label" type="text" sortOrder="160" showInDefault="1" showInWebsite="1" showInStore="0">
+            <label>Ordenação</label>
+            <frontend_class>validate-number</frontend_class>
+            <config_path>payment/iopay_creditcard/sort_order</config_path>
+        </field>
+    </group>
+</include>

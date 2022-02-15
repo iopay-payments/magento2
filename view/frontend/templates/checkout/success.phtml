@@ -1,0 +1,112 @@
+<?php
+/**
+ * @var  \IoPay\Core\Block\Checkout\Success $block
+ */
+$order          = $this->getOrder();
+$total          = $this->getTotal();
+$payment        = $this->getPayment();
+$payment_method = $this->getPaymentMethod();
+?>
+
+<div class="iopay-success">
+    <?php if ($payment_method == 'iopay_pix'):?>
+        <?php
+        $qrCode             = $payment->getAdditionalInformation("iopayPixQrcode");
+        $qrCodeUrl          = $payment->getAdditionalInformation("iopayPixQrcodeUrl");
+        $qrCodeExpiration   = $payment->getAdditionalInformation("iopayPixQrcodeUrl");
+        ?>
+        <div class="container" id="container">
+            <div class="box">
+                <h1>Pagamento via PIX</h1>
+            </div>
+            <div class="box">
+                <img src="https://www.bcb.gov.br/content/estabilidadefinanceira/piximg/logo_pix.png" class="iopay-img-pix" width="180" height="64"/>
+            </div>
+            <div class="box">
+                <img id='barcode' class="iopay-img-qr" src="<?php echo $qrCodeUrl ?>" title="IoPay QrCode" width="200" height="200" />
+            </div>
+            <div class="box">
+                <span class="title"><strong>Escaneie o código com o seu celular</strong></span>
+            </div>
+            <div class="box">
+                <span class="subtitles">Abra o app do seu banco no celular, escolha Pix e aponte a câmera para o código</span>
+            </div>
+            <div class="box">
+                <button class="btn btn-copy-iopay" data-clipboard-text="<?php echo $qrCode; ?>">
+                    Copiar Código
+                </button>
+            </div>
+            <div class="box">
+                <div class="logo-iopay">
+                    <img src="https://iopay.com.br/assets/img/logo/iopay-dark.png"/>
+                </div>
+            </div>
+        </div>
+    <?php endif;?>
+    <?php if ($payment_method == 'iopay_boleto'):?>
+        <?php
+        $boletoUrl          = $payment->getAdditionalInformation("iopayBoletoUrl");
+        $boletoBarcode      = $payment->getAdditionalInformation("iopayBoletoBarcode");
+        $boletoLimitDate    = $payment->getAdditionalInformation("iopayPaymentLimitDate");
+        ?>
+        <div class="container" id="container">
+            <div class="box">
+                <h1>Pagamento via Boleto</h1>
+            </div>
+            <div class="box">
+                <span class="title"><strong>Seu boleto foi gerado com sucesso!</strong></span>
+            </div>
+            <div class="box">
+                <span class="subtitles">Vencimento: <?php echo $boletoLimitDate ?></span>
+            </div>
+            <div class="box">
+                <span class="subtitles">Código de Barras: <?php echo $boletoBarcode ?></span>
+            </div>
+            <div class="box">
+                <span class="subtitles">
+                    <a class="button primary-button" href="<?= $boletoUrl ?>" target="_blank"><span>Imprimir boleto</span></a>
+                </span>
+            </div>
+
+            <div class="box">
+                <div class="logo-iopay">
+                    <img src="https://iopay.com.br/assets/img/logo/iopay-dark.png"/>
+                </div>
+            </div>
+        </div>
+    <?php endif;?>
+    <?php if ($payment_method == 'iopay_creditcard'):?>
+        <?php
+        $creditCard          = $payment->getAdditionalInformation("iopayCreditCardNumber");
+        $creditCardId        = $payment->getAdditionalInformation("iopayCreditCardId");
+        ?>
+        <div class="container" id="container">
+            <div class="box">
+                <h1>Pagamento via Cartão de Crédito</h1>
+            </div>
+            <div class="box">
+                <span class="title"><strong>Seu pedido foi processado com sucesso!</strong></span>
+            </div>
+            <div class="box">
+                <span class="subtitles">Transação de pagamento: <?php echo $creditCardId ?></span>
+            </div>
+            <div class="box">
+                <span class="subtitles">Cartão de Crédito: <?php echo $creditCard ?></span>
+            </div>
+            <div class="box">
+                <span class="subtitles">
+                    <a class="button primary-button" href="<?php echo $this->getOrderUrl() ?>"><span>Acompanhar pedido</span></a>
+                </div>
+            </div>
+            <div class="box">
+                <div class="logo-iopay">
+                    <img src="https://iopay.com.br/assets/img/logo/iopay-dark.png"/>
+                </div>
+            </div>
+        </div>
+    <?php endif;?>
+</div>
+
+
+
+

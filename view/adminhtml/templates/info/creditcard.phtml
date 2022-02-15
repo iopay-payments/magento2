@@ -1,0 +1,21 @@
+<?php
+$method         = $this->getMethod();
+$creditCardId   = $this->getCreditCardId();
+$creditCard     = $this->getCreditCard();
+$objectManager  = \Magento\Framework\App\ObjectManager::getInstance();
+$_helper        = $objectManager->create('IoPay\Core\Helper\Data');
+$logo           = $_helper->getIopayLogo();
+?>
+
+<span><strong><?php echo __($this->getTitle()) ?></strong></span>
+<br><br>
+<span><img src="<?= $logo ?>" width="140px" height="45px" /><span>
+
+<?php if ($method == "iopay_creditcard"): ?>
+    <br>
+    <hr/>
+    <span><?php echo $creditCardId; ?></span>
+    <hr/>
+    <span><strong>Cartão de Crédito:</strong> <?php echo $creditCard; ?></span>
+    <hr/>
+<?php endif; ?>

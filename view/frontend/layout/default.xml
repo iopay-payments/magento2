@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" layout="1column" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <body>
+        <referenceContainer name="footer-container">
+            <container name="footer" as="footer" label="Page Footer" htmlTag="div" htmlClass="footer content">
+                <block class="IoPay\Core\Block\Antifraude\Footer" name="iopay_antifraude_footer" template="IoPay_Core::antifraude/footer.phtml"  />
+            </container>
+        </referenceContainer>
+    </body>
+</page>

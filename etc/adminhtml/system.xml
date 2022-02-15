@@ -1,0 +1,13 @@
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+    <system>
+        <section id="payment">
+            <group id="iopay_configurations" translate="label" type="text" sortOrder="50" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>IoPay Pagamentos</label>
+                <include path="IoPay_Core::system/preferences.xml"/>
+                <include path="IoPay_Core::system/pix.xml"/>
+                <include path="IoPay_Core::system/boleto.xml"/>
+                <include path="IoPay_Core::system/creditcard.xml"/>
+            </group>
+        </section>
+    </system>
+</config>

@@ -1,0 +1,20 @@
+<?php
+$qrCodeUrl  = $this->getPixQrCodeUrl();
+$qrCode     = $this->getPixQrCode();
+$expiration = $this->getExpirationDate();
+?>
+<?php if ($qrCodeUrl): ?>
+    <span><?php echo __($this->getTitle()) ?></span>
+    <br />
+    <span>Pagar até: <?php echo $expiration; ?></span>
+    <hr />
+    <div style="text-align: center">
+        <img width="150" style="margin-bottom: 10px" src="https://www.bcb.gov.br/content/estabilidadefinanceira/piximg/logo_pix.png" />
+        <img width="150" style="margin-bottom: 10px" src="<?= $qrCodeUrl; ?>" />
+        <span style="word-wrap: break-word;"><?= $qrCode; ?></span>
+    </div>
+<?php else: ?>
+    <span><?php echo __($this->getTitle()) ?></span>
+    <br />
+    <img width="150" style="margin-bottom: 10px" src="https://www.bcb.gov.br/content/estabilidadefinanceira/piximg/logo_pix.png" />
+<?php endif ?>

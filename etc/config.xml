@@ -1,0 +1,40 @@
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../Store/etc/config.xsd">
+    <default>
+        <payment>
+            <iopay_pix>
+                <active>1</active>
+                <model>IoPay\Core\Model\Payment\Pix</model>
+                <title>IoPay - Pix</title>
+                <order_status>pending_payment</order_status>
+                <instructions>- Para visualizar o QRCode de pagamento, conclua a compra.</instructions>
+                <allowspecific>0</allowspecific>
+                <sort_order>1</sort_order>
+                <payment_action>authorize</payment_action>
+                <cctypes>AE,VI,MC,DI,JCB</cctypes>
+            </iopay_pix>
+            <iopay_boleto>
+                <active>1</active>
+                <model>IoPay\Core\Model\Payment\Boleto</model>
+                <title>IoPay - Boleto</title>
+                <order_status>pending_payment</order_status>
+                <instructions>- Não receber após vencimento.
+                    - Não receber pagamento em cheque.
+                    - Para maiores detalhes e 2 via do boleto acesse o histórico do seu pedido.</instructions>
+                <allowspecific>0</allowspecific>
+                <sort_order>2</sort_order>
+                <payment_action>authorize</payment_action>
+                <cctypes>AE,VI,MC,DI,JCB</cctypes>
+            </iopay_boleto>
+            <iopay_creditcard>
+                <active>1</active>
+                <model>IoPay\Core\Model\Payment\Creditcard</model>
+                <title>IoPay - Cartão de Crédito</title>
+                <order_status>pending_payment</order_status>
+                <allowspecific>0</allowspecific>
+                <sort_order>3</sort_order>
+                <payment_action>authorize</payment_action>
+                <cctypes>AE,VI,MC,DI,JCB</cctypes>
+            </iopay_creditcard>
+        </payment>
+    </default>
+</config>
