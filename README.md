@@ -22,7 +22,7 @@ Métodos de pagamento disponíveis:
     $ cp -r ~/iopay/* /dir/magento2x/app/code/IoPay/Core
 
 ### Manual
-1. Clique [aqui](https://github.com/iopay-payments/magento2) e baixe o arquivo `.zip` de nossa versão mais recente. O arquivo será semelhante a `iopay-payments-magento2-master.zip`
+1. Clique [aqui](https://github.com/iopay-payments/magento2/archive/refs/tags/v1.0.0.zip) e baixe o arquivo `.zip` de nossa versão mais recente. O arquivo será semelhante a `iopay-payments-magento2-master.zip`
 2. Descompacte o arquivo **zip** e copie todo o conteúdo na pasta raiz da sua instalação do Magento em `app`/`code`/`IoPay`/`Core` (essa pasta deverá ser criada manualmente)
 3. Limpe o cache em `Sistema > Gerenciamento de Cache`
 

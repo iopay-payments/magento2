@@ -1,7 +1,7 @@
 {
     "name": "iopay-payments/magento2",
     "description": "Venda mais em sua loja magento 2 com a IoPay",
-    "type": "composer-plugin",
+    "type": "magento2-module",
     "version": "1.0.0",
     "authors": [
         {
