@@ -16,13 +16,6 @@ class Checkout implements ConfigProviderInterface
         $objectManager = \Magento\Framework\App\ObjectManager::getInstance();
         $_helper = $objectManager->create('IoPay\Core\Helper\Data');
 
-        $logo               = "";
-        $use_logo           = $_helper->getIopayLogoCheckout();
-
-        if ($use_logo) {
-            $logo = $_helper->getIopayLogo();
-        }
-
         $environment            = $_helper->getIopayEnvironment();
         $pix_instructions       = $_helper->getIopayPixInstructions();
         $boleto_instructions    = $_helper->getIopayBoletoInstructions();
@@ -33,15 +26,12 @@ class Checkout implements ConfigProviderInterface
         return [
             'payment' => [
                 self::IOPAY_METHOD_PIX_CODE => [
-                    'instructions'  => $pix_instructions,
-                    'logo_iopay'    => $logo
+                    'instructions'  => $pix_instructions
                 ],
                 self::IOPAY_METHOD_BOLETO_CODE => [
-                    'instructions'  => $boleto_instructions,
-                    'logo_iopay'    => $logo
+                    'instructions'  => $boleto_instructions
                 ],
                 self::IOPAY_METHOD_CREDITCARD_CODE => [
-                    'logo_iopay'    => $logo,
                     'installments'  => $installments,
                     'cvvImage'      => $cvvImage,
                     'cardToken'     => $cardToken,

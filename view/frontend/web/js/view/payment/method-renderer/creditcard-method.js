@@ -46,9 +46,6 @@ define(
                 return window.checkoutConfig.payment.checkmo.mailingAddress;
             },
 
-            getLogoUrl: function () {
-                return window.checkoutConfig.payment[this.getCode()]['logo_iopay'];
-            },
             getIoPayCcMonthsValues: function () {
                 var months = [
                     '01',

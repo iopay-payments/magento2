@@ -25,10 +25,6 @@ define(
             /** Returns instructions */
             getInstructions: function() {
                 return window.checkoutConfig.payment[this.getCode()]['instructions'];
-            },
-
-            getLogoUrl: function () {
-                return window.checkoutConfig.payment[this.getCode()]['logo_iopay'];
             }
         });
     }

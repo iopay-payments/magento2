@@ -11,18 +11,13 @@
             <label>Debug</label>
             <config_path>payment/iopay_preferences/debug</config_path>
             <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+            <comment><![CDATA[Habilite para gerar logs no console da plataforma (para desenvolvedores)]]></comment>
         </field>
         <field id="auto_invoice" translate="label" type="select" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="0">
             <label>Gerar Invoice</label>
             <config_path>payment/iopay_preferences/auto_invoice</config_path>
             <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
             <comment><![CDATA[Habilite para gerar uma fatura automaticamente quando o pagamento for aprovado]]></comment>
-        </field>
-        <field id="logo_checkout" translate="label" type="select" sortOrder="31" showInDefault="1" showInWebsite="1" showInStore="0">
-            <label>Usar logo no Checkout</label>
-            <config_path>payment/iopay_preferences/logo_checkout</config_path>
-            <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
-            <comment><![CDATA[Habilite mostrar a logo da IoPay nos métodos de pagamento no checkout]]></comment>
         </field>
         <field id="email" translate="label" type="text" sortOrder="35" showInDefault="1" showInWebsite="1" showInStore="0">
             <label>IoPay Email</label>

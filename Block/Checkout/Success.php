@@ -7,6 +7,7 @@ class Success
     protected $_orderFactory;
     protected $_checkoutSession;
     protected $_scopeConfig;
+    protected $_helper;
 
     public function __construct(
         \Magento\Framework\View\Element\Template\Context $context,
@@ -23,6 +24,9 @@ class Success
             $context,
             $data
         );
+
+        $objectManager = \Magento\Framework\App\ObjectManager::getInstance();
+        $this->_helper = $objectManager->create('IoPay\Core\Helper\Data');
 
         $this->setTemplate('checkout/success.phtml');
     }
@@ -131,5 +135,9 @@ class Success
         $params = ['order_id' => $this->_checkoutSession->getLastRealOrder()->getId()];
         $url = $this->_urlBuilder->getUrl('sales/order/reorder', $params);
         return $url;
+    }
+
+    public function getExpirationDate() {
+        return $this->_helper->convertDateHour($this->getPayment()->getAdditionalInformation("iopayPaymentLimitDate"));
     }
 }

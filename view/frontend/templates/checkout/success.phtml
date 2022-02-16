@@ -47,7 +47,7 @@ $payment_method = $this->getPaymentMethod();
         <?php
         $boletoUrl          = $payment->getAdditionalInformation("iopayBoletoUrl");
         $boletoBarcode      = $payment->getAdditionalInformation("iopayBoletoBarcode");
-        $boletoLimitDate    = $payment->getAdditionalInformation("iopayPaymentLimitDate");
+        $boletoLimitDate    = $this->getExpirationDate(); //$payment->getAdditionalInformation("iopayPaymentLimitDate");
         ?>
         <div class="container" id="container">
             <div class="box">
@@ -107,6 +107,27 @@ $payment_method = $this->getPaymentMethod();
     <?php endif;?>
 </div>
 
+<script type="text/javascript">
+    require(['jquery', 'clipboard'],function($, ClipboardJS){
+        (function($) {
+            $(window).load(function () {
+                var _clipboard = new ClipboardJS('.btn-copy-iopay');
 
+                _clipboard.on('success', function(e) {
+                    console.info('Action:', e.action);
+                    console.info('Text:', e.text);
+                    console.info('Trigger:', e.trigger);
+                    alert('Código de pagamento copiado com sucesso!');
+                    e.clearSelection();
+                });
+
+                _clipboard.on('error', function(e) {
+                    console.error('Action:', e.action);
+                    console.error('Trigger:', e.trigger);
+                });
+            });
+        })(jQuery);
+    });
+</script>
 
 

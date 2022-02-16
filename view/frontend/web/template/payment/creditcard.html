@@ -1,11 +1,20 @@
 <div class="payment-method" data-bind="css: {'_active': (getCode() == isChecked())}">
-    <div class="payment-method-title field choice">
+    <div class="payment-method-title field choice IoPayInputGroup">
         <input type="radio"
                name="payment[method]"
                class="radio"
                data-bind="attr: {'id': getCode()}, value: getCode(), checked: isChecked, click: selectPaymentMethod, visible: isRadioButtonVisible()"/>
         <label data-bind="attr: {'for': getCode()}" class="label">
-            <img data-bind="attr: {alt: 'IoPay',src:getLogoUrl()}" width="50px" height="15px" class="payment-icon"/>
+            <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                 viewBox="0 0 16 16" style="enable-background:new 0 0 16 16; width: 20px; margin-bottom: -4px" xml:space="preserve">
+                                        <style type="text/css">
+                                            .st1{fill:#5B2886;}
+                                        </style>
+                <path class="st1" d="M11,5.5C11,5.2,11.2,5,11.5,5h2C13.8,5,14,5.2,14,5.5v1C14,6.8,13.8,7,13.5,7h-2C11.2,7,11,6.8,11,6.5V5.5z"/>
+                <path class="st1" d="M2,2C0.9,2,0,2.9,0,4v8c0,1.1,0.9,2,2,2h12c1.1,0,2-0.9,2-2V4c0-1.1-0.9-2-2-2H2z M15,4v5H1V4c0-0.6,0.4-1,1-1
+	                                    h12C14.6,3,15,3.4,15,4z M14,13H2c-0.6,0-1-0.4-1-1v-1h14v1C15,12.6,14.6,13,14,13z"/>
+                                    </svg>
+            &nbsp;
             <span data-bind="text: getTitle()"></span>
         </label>
     </div>
@@ -25,6 +34,11 @@
             <input type="hidden" id="creditCardToken" name="payment[credit_card_token]">
             <input type="hidden" id="environment" data-bind="value: getEnvironment()">
 
+            <div class="col-md-12" style="margin-bottom: 40px">
+                <img id="imgIopayBrands" src="https://checkout.iopay.com.br/checkout/assets/img/iopay_bandeiras_aceitas.png" alt="" style="width: 100%; opacity: 0.9"/>
+                <img id="imgIopayBrandsMobile" src="https://checkout.iopay.com.br/checkout/assets/img/iopay_bandeiras_aceitas_m.png" alt="" style="width: 66%; opacity: 0.7"/>
+            </div>
+
             <!--cc number-->
             <div class="field _required">
                 <label data-bind="attr: {for: getCode() + 'number'}" class="label">
@@ -34,6 +48,7 @@
                 <div class="control">
                     <input class="input-text required card_number" name="payment[credit_card_number]"
                            type="text"
+                           placeholder="xxxx-xxxx-xxxx-xxxx"
                            data-bind="attr: {
                             id: getCode() + '_number',
                             'data-container': getCode() + '_number',
@@ -53,6 +68,7 @@
                 <div class="control">
                     <input class="input-text required card_holder" name="payment[credit_card_holder]"
                            type="text"
+                           placeholder="Nome completo"
                            data-bind="attr: {
                             id: 'creditCardHolder',
                             'data-validate': JSON.stringify({'required':true})},
@@ -110,7 +126,7 @@
                     <span>Código Verificador</span>
                 </label>
                 <div class="control _with-tooltip">
-                    <input type="number" autocomplete="off" class="input-text cvv cc_cid" name="payment[cc_cid]"
+                    <input type="number" autocomplete="off" class="input-text cvv cc_cid" name="payment[cc_cid]" placeholder="123"
                            data-bind="attr: {
                             id: 'cc_cid',
                             'data-validate': JSON.stringify({'required':true})},
@@ -143,7 +159,9 @@
                 </label>
 
                 <div class="control">
-                    <input class="input-text required-entry required card_document" name="payment[credit_card_document]" type="text"
+                    <input class="input-text required-entry required card_document" name="payment[credit_card_document]"
+                           type="text"
+                           placeholder="xxx.xxx.xxx-xx"
                            data-validate="{required:true}"
                            required data-bind="attr: {
                             id: 'cpf',
@@ -172,6 +190,20 @@
                     </select>
                 </div>
             </div>
+
+            <div class="iopay_security_message">
+                <div class="">
+                    <a href="https://iopay.com.br" target="_blank" alt="IOPAY" title="IOPAY">
+                        <img src="https://checkout.iopay.com.br/checkout/assets/img/iopay.png" width="60">
+                    </a>
+                </div>
+                <div class="iopay_security_message2">
+                    Essa transação é processada com tecnologias de pagamento da IOPAY.
+                    <br/>
+                    <svg xmlns="http://www.w3.org/2000/svg" width='11' height='11' viewBox="0 0 448 512"><!--! Font Awesome Pro 6.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2022 Fonticons, Inc. --><path d="M80 192V144C80 64.47 144.5 0 224 0C303.5 0 368 64.47 368 144V192H384C419.3 192 448 220.7 448 256V448C448 483.3 419.3 512 384 512H64C28.65 512 0 483.3 0 448V256C0 220.7 28.65 192 64 192H80zM144 192H304V144C304 99.82 268.2 64 224 64C179.8 64 144 99.82 144 144V192z"/></svg> Esta é uma conexão segura e os seus dados são protegidos com criptografia de ponta a ponta.
+                </div>
+            </div>
+
         </fieldset>
         </form>
 
