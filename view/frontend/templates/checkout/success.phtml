@@ -6,42 +6,124 @@ $order          = $this->getOrder();
 $total          = $this->getTotal();
 $payment        = $this->getPayment();
 $payment_method = $this->getPaymentMethod();
+$myOrders       = $this->getUrl("sales/order/view/order_id/{$order->getId()}");
+$iopayPaymentId = $this->getIopayId();
+$grandTotal     = $this->getOrderTotalCurrency();
 ?>
 
-<div class="iopay-success">
     <?php if ($payment_method == 'iopay_pix'):?>
         <?php
         $qrCode             = $payment->getAdditionalInformation("iopayPixQrcode");
         $qrCodeUrl          = $payment->getAdditionalInformation("iopayPixQrcodeUrl");
         $qrCodeExpiration   = $payment->getAdditionalInformation("iopayPixQrcodeUrl");
         ?>
-        <div class="container" id="container">
-            <div class="box">
-                <h1>Pagamento via PIX</h1>
-            </div>
-            <div class="box">
-                <img src="https://www.bcb.gov.br/content/estabilidadefinanceira/piximg/logo_pix.png" class="iopay-img-pix" width="180" height="64"/>
-            </div>
-            <div class="box">
-                <img id='barcode' class="iopay-img-qr" src="<?php echo $qrCodeUrl ?>" title="IoPay QrCode" width="200" height="200" />
-            </div>
-            <div class="box">
-                <span class="title"><strong>Escaneie o código com o seu celular</strong></span>
-            </div>
-            <div class="box">
-                <span class="subtitles">Abra o app do seu banco no celular, escolha Pix e aponte a câmera para o código</span>
-            </div>
-            <div class="box">
-                <button class="btn btn-copy-iopay" data-clipboard-text="<?php echo $qrCode; ?>">
-                    Copiar Código
-                </button>
-            </div>
-            <div class="box">
-                <div class="logo-iopay">
-                    <img src="https://iopay.com.br/assets/img/logo/iopay-dark.png"/>
+        <div class="checkout-success">
+            <div class="container">
+                <div id="pixArea" class="col-md-12 col-lg-12 col-sm-12 center" style="margin-top:50px;">
+                    <h5 style="margin-bottom:15px;">Pague a sua compra com PIX</h5>
+
+                    <div class="col-md-12 paddingBox" style="padding-left:0px; margin-left:0px; ">
+                        <div class="row" style="margin-bottom: 30px; ">
+                            <div class="col-md-3 col-sm-12 smartPaddingMobile" style="margin-bottom: 10px">
+                                <div class="text-center stats-box-height" style="background-color: #f3f3f3; padding: 10px;border-radius: 8px">
+                        <span>
+                            <img class="logo-pix" src="https://static.iopay.dev/ecommerce_plugins/opencart/iopay1.5.5/img/logo-pix.png" height="50"/>
+                        </span>
+                                </div>
+                            </div>
+                            <div class="col-md-3 col-sm-12 smartPaddingMobile" style="margin-bottom: 10px">
+                                <div class="text-center stats-box-height" style="background-color: #f3f3f3; padding: 10px;border-radius: 8px">
+                                    <span>Número do pedido</span>
+                                    <br>
+                                    <span style="font-size: 25px; color: #474747; font-weight: bold" id="OrderID"><?php echo $order->getIncrementId(); ?></span>
+                                </div>
+                            </div>
+                            <div class=" col-md-3 col-sm-12 smartPaddingMobile" style="margin-bottom: 10px">
+                                <div class="text-center stats-box-height" style="background-color: #f3f3f3; padding: 10px;border-radius: 8px">
+                                    <span>Valor Total</span>
+                                    <br>
+                                    <span style="font-size: 25px; color: #474747; font-weight: bold" id="OrderTotal"><?php echo $grandTotal; ?></span>
+                                </div>
+                            </div>
+                            <div class=" col-md-3 col-sm-12 smartPaddingMobile mb-2" style="margin-bottom: 10px">
+                                <div class="text-center stats-box-height" style="background-color: #f3f3f3; padding: 10px;border-radius: 8px">
+                                    <span>Status</span>
+                                    <br>
+                                    <span class="label label-warning" style="font-size: 11px;" id="StatusLabel">Aguardando Pagamento</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <br>
+                        <div class="col-md-3 col-sm-12 smartPaddingMobile" style="padding: 10px; padding-left:0px; padding-right:0px;" id="showQrCode">
+                            <strong>Pagar por PIX QRCode</strong>
+                            <br>
+                            <span id="pirQRCode" class="text-left">
+                    <img src="<?php echo $qrCodeUrl; ?>" alt="" style="width: 270px;  background-color: #ffffff;" id="QRCodeImage">
+                </span>
+                            <br>
+                            <strong>Pagar por PIX Copia e Cola</strong><br/>
+                            <span data-clipboard-text="<?php echo $qrCode; ?>" type="button" class="btn text-left" style="margin-top: 16px; border:0; font-size:14px; font-weigh:600; text-align:left; background-color:#3d0769; color:white">
+                                            Copiar Chave &nbsp;
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="11" height="11" fill="currentColor" class="bi bi-back" viewBox="0 0 16 16">
+                                                <path d="M0 2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v2h2a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2v-2H2a2 2 0 0 1-2-2V2zm2-1a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H2z"/>
+                                            </svg>
+                                        </span>
+
+                            <span id="pixEntropyKeyCopiedMessage" class="label label-info hidden">copiado</span>
+                        </div>
+                        <div class="col-md-1 smartPaddingMobile" style="padding-left:5px; " id="showQrCodeSpacer">&nbsp;</div>
+                        <div class="col-md-8 col-sm-12 smartPaddingMobile text-left" style="padding-top:30px; border-left:1px solid #BBBBBB; padding-left:35px; " id="showQrCodeIntro">
+                            <strong>Como eu pago com Pix?</strong><br><br>
+                            <br>
+                            <div style="display: flex">
+                                <div>
+                                    <div class="circleSteps">1</div>
+                                </div>
+                                <div style="padding-top: 4px">Abra o aplicativo do seu banco e navegue para a seção de Pix</div>
+                            </div>
+                            <div style="display: flex; margin-top: 30px">
+                                <div>
+                                    <div class="circleSteps">2</div>
+                                </div>
+                                <div style="padding-top: 4px">Selecione a opção pagar por PIX QR Code ou Pix Copia e Cola e aponte a câmera para o código QR ao lado ou copie e cole o código</div>
+                            </div>
+                            <div style="display: flex; margin-top: 30px">
+                                <div>
+                                    <div class="circleSteps">3</div>
+                                </div>
+                                <div style="padding-top: 4px">Após efetuar o pagamento consulte o status do pedido em Meus Pedidos</div>
+                            </div>
+                            <br/>
+                            <button class="btn btn-io btn-md font-white" type="submit" style="border-radius: 25px;" onclick='window.location.href="<?php echo $myOrders; ?>"' >
+                                &nbsp; &nbsp; Meus Pedidos &nbsp; &nbsp;
+                            </button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            <br/>
+                            <br/>
+                            <br/>
+
+                            <div class="row d-flex align-items-center" style="margin: 0 auto;">
+                                <div class="col-sm-12 col-md-12 col-lg-12 d-flex align-items-center" id="paymentIoPay">
+                                    <div class="row" style="margin-top: 40px;">
+                                        <div class="col-12 float-center">
+                                            <div class="d-flex align-content- flex-wrap ">
+                                                <div class="p-4 ml-sm-0 ml-xl-5 ml-md-5"><a href="https://iopay.com.br" target="_blank" alt="IOPAY" title="IOPAY"><img src="https://static.iopay.dev/assets/img/iopay.png" width="60"></a></div>
+                                                <div class="p-4 ml-sm-0 ml-xl-5 ml-md-5 small">
+                                                    <br/>
+                                                    Essa transação é processada com tecnologias de pagamento da IOPAY.<br/>
+                                                    <i><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" style="width: 10px;margin-bottom: -2px"><!--! Font Awesome Pro 6.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2022 Fonticons, Inc. --><path fill="#666666" d="M80 192V144C80 64.47 144.5 0 224 0C303.5 0 368 64.47 368 144V192H384C419.3 192 448 220.7 448 256V448C448 483.3 419.3 512 384 512H64C28.65 512 0 483.3 0 448V256C0 220.7 28.65 192 64 192H80zM144 192H304V144C304 99.82 268.2 64 224 64C179.8 64 144 99.82 144 144V192z"/></svg></i> Esta é uma conexão segura e os seus dados são protegidos com criptografia de ponta a ponta.
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
+
     <?php endif;?>
     <?php if ($payment_method == 'iopay_boleto'):?>
         <?php
@@ -49,28 +131,72 @@ $payment_method = $this->getPaymentMethod();
         $boletoBarcode      = $payment->getAdditionalInformation("iopayBoletoBarcode");
         $boletoLimitDate    = $this->getExpirationDate(); //$payment->getAdditionalInformation("iopayPaymentLimitDate");
         ?>
-        <div class="container" id="container">
-            <div class="box">
-                <h1>Pagamento via Boleto</h1>
-            </div>
-            <div class="box">
-                <span class="title"><strong>Seu boleto foi gerado com sucesso!</strong></span>
-            </div>
-            <div class="box">
-                <span class="subtitles">Vencimento: <?php echo $boletoLimitDate ?></span>
-            </div>
-            <div class="box">
-                <span class="subtitles">Código de Barras: <?php echo $boletoBarcode ?></span>
-            </div>
-            <div class="box">
-                <span class="subtitles">
-                    <a class="button primary-button" href="<?= $boletoUrl ?>" target="_blank"><span>Imprimir boleto</span></a>
-                </span>
-            </div>
+        <div class="checkout-success">
+            <div class="container">
+                <div class="col-md-12 col-lg-12 col-sm-12 center" style="margin-top:50px;">
+                    <h5 style="margin-bottom:15px;">O seu boleto foi gerado com sucesso! </h5>
+                    <div class="col-md-12 paddingBox" style="padding-left:0px; margin-left:0px; ">
+                        <div class="row" style="margin-bottom: 30px; ">
+                            <div class="col-md-3 col-sm-12 smartPaddingMobile">
+                                <div class="text-center stats-box-height" style="background-color: #f3f3f3; padding: 10px;border-radius: 8px">
+                                    <span><img class="logo-boleto" src="https://static.iopay.dev/ecommerce_plugins/opencart/iopay1.5.5/img/boleto.png" height="50"/></span>
+                                </div>
+                            </div>
+                            <div class="col-md-3 col-sm-12 smartPaddingMobile">
+                                <div class="text-center stats-box-height" style="background-color: #f3f3f3; padding: 10px;border-radius: 8px">
+                                    <span>Número do pedido</span>
+                                    <br>
+                                    <span style="font-size: 25px; color: #474747; font-weight: bold" id="OrderID"><?php echo $order->getIncrementId(); ?></span>
+                                </div>
+                            </div>
+                            <div class=" col-md-3 col-sm-12 smartPaddingMobile">
+                                <div class="text-center stats-box-height" style="background-color: #f3f3f3; padding: 10px;border-radius: 8px">
+                                    <span>Valor Total</span>
+                                    <br>
+                                    <span style="font-size: 25px; color: #474747; font-weight: bold" id="OrderTotal"><?php echo $grandTotal; ?></span>
+                                </div>
+                            </div>
+                            <div class=" col-md-3 col-sm-12 smartPaddingMobile mb-2" style="margin-bottom: 10px">
+                                <div class="text-center stats-box-height" style="background-color: #f3f3f3; padding: 10px;border-radius: 8px">
+                                    <span>Status</span>
+                                    <br>
+                                    <span class="label label-warning" style="font-size: 11px;" id="StatusLabel">Aguardando Pagamento</span>
+                                </div>
+                            </div>
+                        </div>
+                        <br>
+                        <div class="col-md-12 col-sm-12 smartPaddingMobile" style="padding: 10px; padding-left:0px; padding-top:0px; margin-top:0px; padding-right:0px;" id="showQrCode">
+                            <div class="alert alert-success mb-3" id="paymentSuccess" style="padding: 16px; margin-bottom: 30px;">
+                                <h5 id="failTitle" style="font-size: 16px;">Pagamento Processado com Sucesso!</h5>
+                                Parabéns! O seu pagamento foi boleto foi processado! Aguardamos o seu pagamento!
+                            </div>
+                            <strong>Número do pedido:</strong><br>
+                            <?php echo $order->getIncrementId(); ?>
+                            <br>
+                            <br>
 
-            <div class="box">
-                <div class="logo-iopay">
-                    <img src="https://iopay.com.br/assets/img/logo/iopay-dark.png"/>
+                            <strong>Data de Vencimento </strong><br>
+                            <?php echo $boletoLimitDate ?>
+                            <br><br>
+
+                            <strong>Número do Boleto </strong><br>
+                            <img class="logo-boleto" src="https://static.iopay.dev/ecommerce_plugins/opencart/iopay1.5.5/img/boleto.png" height="20"/> &nbsp;&nbsp; <?= $boletoBarcode ?> &nbsp;&nbsp;&nbsp;&nbsp; <a href="<?= $boletoUrl ?>" title="Clique para ver o boleto" target="_blank">[ Visualizar Boleto ]</a>
+                            <br><br>
+
+                            <strong>Status: </strong><br>
+                            Aguardando Pagamento
+                            <br><br>
+                            <strong>Gateway: </strong><br>
+                            IOPAY
+                            <br><br>
+
+                            <button class="btn btn-io btn-md font-white" type="submit" style="border-radius: 25px;" onclick='window.location.href="<?php echo $myOrders; ?>"' >
+                                &nbsp; &nbsp; Detalhes do Pedido &nbsp; &nbsp;
+                            </button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+                        </div>
+
+                    </div>
                 </div>
             </div>
         </div>
@@ -79,33 +205,89 @@ $payment_method = $this->getPaymentMethod();
         <?php
         $creditCard          = $payment->getAdditionalInformation("iopayCreditCardNumber");
         $creditCardId        = $payment->getAdditionalInformation("iopayCreditCardId");
+        $cardFormatted       = $payment->getAdditionalInformation("iopayCreditCardNumberForm");
+        $brand               = $this->getCardBrand(trim(str_replace(' ', '', $creditCard)));
+        $brandImage          = $this->getBrandImage($brand);
+        $iopayInstallments   = $payment->getAdditionalInformation("cc_installments");
         ?>
-        <div class="container" id="container">
-            <div class="box">
-                <h1>Pagamento via Cartão de Crédito</h1>
-            </div>
-            <div class="box">
-                <span class="title"><strong>Seu pedido foi processado com sucesso!</strong></span>
-            </div>
-            <div class="box">
-                <span class="subtitles">Transação de pagamento: <?php echo $creditCardId ?></span>
-            </div>
-            <div class="box">
-                <span class="subtitles">Cartão de Crédito: <?php echo $creditCard ?></span>
-            </div>
-            <div class="box">
-                <span class="subtitles">
-                    <a class="button primary-button" href="<?php echo $this->getOrderUrl() ?>"><span>Acompanhar pedido</span></a>
-                </div>
-            </div>
-            <div class="box">
-                <div class="logo-iopay">
-                    <img src="https://iopay.com.br/assets/img/logo/iopay-dark.png"/>
+        <div class="checkout-success">
+            <div class="container">
+                <div class="col-md-12 col-lg-12 col-sm-12 center" style="margin-top:50px;">
+                    <div class="col-md-12 paddingBox" style="padding-left:0px; margin-left:0px; ">
+                        <div class="row" style="margin-bottom: 30px; ">
+                            <div class="col-md-3 col-sm-12 smartPaddingMobile">
+                                <div class="text-center stats-box-height" style="background-color: #f3f3f3; padding: 10px;border-radius: 8px">
+                        <span>
+                            <img class="logo-cc-brand" src="<?php echo $brandImage; ?>" height="50"/>
+                            <span><strong><?php echo $cardFormatted; ?></strong></span>
+                        </span>
+                                </div>
+                            </div>
+                            <div class="col-md-3 col-sm-12 smartPaddingMobile">
+                                <div class="text-center stats-box-height" style="background-color: #f3f3f3; padding: 10px;border-radius: 8px">
+                                    <span>Número do pedido</span>
+                                    <br>
+                                    <span style="font-size: 25px; color: #474747; font-weight: bold" id="OrderID"><?php echo $order->getIncrementId(); ?></span>
+                                </div>
+                            </div>
+                            <div class=" col-md-3 col-sm-12 smartPaddingMobile">
+                                <div class="text-center stats-box-height" style="background-color: #f3f3f3; padding: 10px;border-radius: 8px">
+                                    <span>Valor Total</span>
+                                    <br>
+                                    <span style="font-size: 25px; color: #474747; font-weight: bold" id="OrderTotal"><?php echo $grandTotal; ?></span>
+                                </div>
+                            </div>
+                            <div class=" col-md-3 col-sm-12 smartPaddingMobile">
+                                <div class="text-center stats-box-height" style="background-color: #f3f3f3; padding: 10px;border-radius: 8px">
+                                    <span>Status</span>
+                                    <br>
+                                    <span class="label label-warning" style="font-size: 11px;" id="StatusLabel">Processando</span>
+                                </div>
+                            </div>
+                        </div>
+                        <br>
+                        <div class="col-md-12 col-sm-12 smartPaddingMobile" style="padding: 10px; padding-left:0px; padding-top:0px; margin-top:0px; padding-right:0px;" id="showQrCode">
+                            <div class="alert alert-success mb-3" id="paymentSuccess" style="padding: 16px; margin-bottom: 30px;">
+                                <h5 id="failTitle" style="font-size: 16px;">Pagamento Processado com Sucesso!</h5>
+                                Parabéns! O seu pagamento foi processado!
+                            </div>
+
+                            <strong>Número do pedido:</strong><br>
+                            <?php echo $order->getIncrementId(); ?>
+                            <br>
+                            <br>
+
+                            <strong>ID da Transação:</strong><br>
+                            <?php echo $this->getIopayPaymentId(); ?>
+                            <br>
+                            <br>
+
+                            <strong>Modalidade de Parcelamento:</strong><br>
+                            <?php
+                            $installMentsMsg = "";
+                            if ($iopayInstallments == 1) {
+                                $installMentsMsg = "Crédito à vista (".$grandTotal.")";
+                            } else {
+                                $installMentsMsg = "Parcelado em ".$iopayInstallments.'x';
+                            }
+                            ?>
+                            <?php echo $installMentsMsg; ?>
+                            <br>
+                            <br>
+
+                            <strong>Gateway: </strong><br>
+                            IOPAY
+                            <br><br>
+                            <button class="btn btn-io btn-md font-white" type="submit" style="border-radius: 25px;" onclick='window.location.href="<?php echo $myOrders; ?>"' >
+                                &nbsp; &nbsp; Detalhes do Pedido &nbsp; &nbsp;
+                            </button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     <?php endif;?>
-</div>
 
 <script type="text/javascript">
     require(['jquery', 'clipboard'],function($, ClipboardJS){

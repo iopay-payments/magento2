@@ -8,13 +8,16 @@ use \Magento\Framework\App\Helper\AbstractHelper;
 class Data extends AbstractHelper
 {
     protected $_sessionManager;
+    protected $_pricingHelper;
 
     public function __construct
     (
         \Magento\Framework\App\Helper\Context $context,
-        \Magento\Framework\Session\SessionManager $sessionManager
+        \Magento\Framework\Session\SessionManager $sessionManager,
+        \Magento\Framework\Pricing\Helper\Data $pricingHelper
     ) {
         $this->_sessionManager = $sessionManager;
+        $this->_pricingHelper = $pricingHelper;
         parent::__construct($context);
     }
 
@@ -77,6 +80,79 @@ class Data extends AbstractHelper
 
     public function getIopayCreditCardInstallments() {
         return $this->scopeConfig->getValue('payment/iopay_creditcard/installments', \Magento\Store\Model\ScopeInterface::SCOPE_STORE);
+    }
+
+    public function getIopayCcInstallmentsWithFee() {
+        return $this->scopeConfig->getValue('payment/iopay_creditcard/installments_with_fee', \Magento\Store\Model\ScopeInterface::SCOPE_STORE);
+    }
+
+    public function getIopayCcInstallmentsFee() {
+        return $this->scopeConfig->getValue('payment/iopay_creditcard/installments_fee', \Magento\Store\Model\ScopeInterface::SCOPE_STORE);
+    }
+
+    /**
+     * Return installments options to populate dropdown in checkout field
+     * @return array|mixed|null
+     */
+    public function getIopayCcInstallments($order) {
+        $grandTotal         = $order->getGrandTotal();
+        $installOpt         = $this->getIopayCreditCardInstallments();
+        $installWithFee     = $this->getIopayCcInstallmentsWithFee();
+        $installFee         = $this->getIopayCcInstallmentsFee();
+        $installments       = null;
+
+        for ($i=1; $i <= $installOpt; $i++) {
+
+            $installmentAmount  = $grandTotal/$i; //valor da parcela
+            $labelFee           = "sem juros";
+            $orderTotal         = $grandTotal;
+
+            if ($installWithFee) {
+                if ($i >= $installWithFee) { //juros nas parcelas acima de
+                    $fee                = ($grandTotal / 100) * $installFee;
+                    $installmentAmount  = $installmentAmount + $fee; //parcela + juro
+                    $orderTotal         = $i * $installmentAmount;
+                    $labelFee           = "com juros de {$installFee}%";
+                }
+            }
+
+            $orderTotal         = $this->_pricingHelper->currency($orderTotal,true,false);
+            $installmentAmount  = $this->_pricingHelper->currency($installmentAmount,true,false);
+
+            $label              = "{$i}x de {$installmentAmount} {$labelFee} (Total {$orderTotal})";
+            $installments[$i]   = $label;
+        }
+
+        return $installments;
+    }
+
+    /**
+     * Return installments options to populate dropdown in checkout field
+     * @return array|mixed|null
+     */
+    public function getOrderTotalWithInstallments($order, $installment) {
+        $grandTotal         = $order->getGrandTotal();
+        $installOpt         = $this->getIopayCreditCardInstallments();
+        $installWithFee     = $this->getIopayCcInstallmentsWithFee();
+        $installFee         = $this->getIopayCcInstallmentsFee();
+
+        for ($i=1; $i <= $installOpt; $i++) {
+
+            $installmentAmount  = $grandTotal/$i; //valor da parcela
+            $orderTotal         = $grandTotal;
+
+            if ($installWithFee) {
+                if ($i >= $installWithFee) { //juros nas parcelas acima de
+                    $fee                = ($grandTotal / 100) * $installFee;
+                    $installmentAmount  = $installmentAmount + $fee; //parcela + juro
+                    $orderTotal         = $i * $installmentAmount;
+                }
+            }
+
+            if ($i == $installment) {
+                return $orderTotal;
+            }
+        }
     }
 
     public function getIopayAntifraudePlan() {
@@ -356,5 +432,70 @@ class Data extends AbstractHelper
         /** @var \Magento\Framework\View\Asset\Repository */
         $viewRepository = $objectManager->get('\Magento\Framework\View\Asset\Repository');
         return $viewRepository->getUrl($imageModulePath);
+    }
+
+    public function getCardBrand($number) {
+        $brand = null;
+        $brands = array(
+            'visa'       => '/^4\d{12}(\d{3})?$/',
+            'mastercard' => '/^(5[1-5]\d{4}|677189)\d{10}$/',
+            'diners'     => '/^3(0[0-5]|[68]\d)\d{11}$/',
+            'discover'   => '/^6(?:011|5[0-9]{2})[0-9]{12}$/',
+            'elo'        => '/^((((636368)|(438935)|(504175)|(451416)|(636297))\d{0,10})|((5067)|(4576)|(4011))\d{0,12})$/',
+            'amex'       => '/^3[47]\d{13}$/',
+            'jcb'        => '/^(?:2131|1800|35\d{3})\d{11}$/',
+            'aura'       => '/^(5078\d{2})(\d{2})(\d{11})$/',
+            'hipercard'  => '/^(606282\d{10}(\d{3})?)|(3841\d{15})$/',
+            'maestro'    => '/^(?:5[0678]\d\d|6304|6390|67\d\d)\d{8,15}$/',
+        );
+
+        foreach ($brands as $_brand => $regex) {
+            if (preg_match($regex, $number) ) {
+                $brand = $_brand;
+                break;
+            }
+        }
+
+        return $brand;
+    }
+
+    public function getBrandImage($brand) {
+        switch ($brand) {
+            case 'visa':
+                $brandImg = $this->getImageUrl('IoPay_Core::images/iopay/flags/visa.svg');
+                break;
+            case 'mastercard':
+                $brandImg = $this->getImageUrl('IoPay_Core::images/iopay/flags/master-card.svg');
+                break;
+            case 'diners':
+                $brandImg = $this->getImageUrl('IoPay_Core::images/iopay/flags/diners.svg');
+                break;
+            case 'discover':
+                $brandImg = $this->getImageUrl('IoPay_Core::images/iopay/flags/discover-network.svg');
+                break;
+            case 'elo':
+                $brandImg = $this->getImageUrl('IoPay_Core::images/iopay/flags/elo-card.svg');
+                break;
+            case 'amex':
+                $brandImg = $this->getImageUrl('IoPay_Core::images/iopay/flags/american-express.svg');
+                break;
+            case 'jcb':
+                $brandImg = $this->getImageUrl('IoPay_Core::images/iopay/flags/jcb.svg');
+                break;
+            case 'aura':
+                $brandImg = $this->getImageUrl('IoPay_Core::images/iopay/flags/aura.svg');
+                break;
+            case 'hipercard':
+                $brandImg = $this->getImageUrl('IoPay_Core::images/iopay/flags/hipercard.svg');
+                break;
+            case 'maestro':
+                $brandImg = $this->getImageUrl('IoPay_Core::images/iopay/flags/maestro.svg');
+                break;
+            default:
+                $brandImg = null;
+                break;
+        }
+
+        return $brandImg;
     }
 }

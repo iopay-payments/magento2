@@ -30,6 +30,15 @@
             <config_path>payment/iopay_creditcard/installments</config_path>
             <source_model>IoPay\Core\Model\Config\Source\Installments</source_model>
         </field>
+        <field id="installments_with_fee" translate="label" type="select" sortOrder="51" showInDefault="1" showInWebsite="1" showInStore="0">
+            <label>Juros a partir da parcela</label>
+            <config_path>payment/iopay_creditcard/installments_with_fee</config_path>
+            <source_model>IoPay\Core\Model\Config\Source\Installmentsfee</source_model>
+        </field>
+        <field id="installments_fee" translate="label" type="text" sortOrder="52" showInDefault="1" showInWebsite="1" showInStore="0">
+            <label>Juros por parcela (%)</label>
+            <config_path>payment/iopay_creditcard/installments_fee</config_path>
+        </field>
         <field id="allowspecific" translate="label" type="allowspecific" sortOrder="130" showInDefault="1" showInWebsite="1" showInStore="0">
             <label>Permitidos em Países</label>
             <config_path>payment/iopay_creditcard/allowspecific</config_path>

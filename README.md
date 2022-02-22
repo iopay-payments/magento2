@@ -1,5 +1,5 @@
 # Modulo para Magento 2.x - IoPay
-![IoPay](https://media-exp1.licdn.com/dms/image/C4E1BAQGL46hmpSEGZQ/company-background_10000/0/1598031833275?e=1645052400&v=beta&t=4jUwDCEWagtpngHp046VCjieq-Wvw8s7GIZFZAMdIss)
+![IoPay](https://static.iopay.dev/assets/img/capa_git.jpg)
 ## Documentação
 
 Este módulo para Magento 2.x permite integrar sua loja com a IoPay API.

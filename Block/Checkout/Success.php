@@ -8,18 +8,21 @@ class Success
     protected $_checkoutSession;
     protected $_scopeConfig;
     protected $_helper;
+    protected $_pricingHelper;
 
     public function __construct(
         \Magento\Framework\View\Element\Template\Context $context,
         \Magento\Sales\Model\OrderFactory $orderFactory,
         \Magento\Checkout\Model\Session $checkoutSession,
         \Magento\Framework\App\Config\ScopeConfigInterface $scopeConfig,
+        \Magento\Framework\Pricing\Helper\Data $pricingHelper,
         array $data = []
     )
     {
         $this->_orderFactory = $orderFactory;
         $this->_checkoutSession = $checkoutSession;
         $this->_scopeConfig = $scopeConfig;
+        $this->_pricingHelper = $pricingHelper;
         parent::__construct(
             $context,
             $data
@@ -51,6 +54,10 @@ class Success
         $order = $this->_orderFactory->create()->loadByIncrementId($orderIncrementId);
 
         return $order;
+    }
+
+    public function getOrderTotalCurrency() {
+        return $this->_pricingHelper->currency($this->getOrder()->getGrandTotal(),true,false);
     }
 
     /**
@@ -139,5 +146,21 @@ class Success
 
     public function getExpirationDate() {
         return $this->_helper->convertDateHour($this->getPayment()->getAdditionalInformation("iopayPaymentLimitDate"));
+    }
+
+    public function getCardBrand($creditcard) {
+        return $this->_helper->getCardBrand($creditcard);
+    }
+
+    public function getBrandImage($brand) {
+        return $this->_helper->getBrandImage($brand);
+    }
+
+    public function getIopayId() {
+        return $this->getPayment()->getAdditionalInformation("iopayPaymentId");
+    }
+
+    public function getIopayPaymentId() {
+        return $this->getPayment()->getAdditionalInformation("iopayCreditCardId");
     }
 }

@@ -87,6 +87,7 @@ define(
                 });
             },
             getIoPayInstallments: function () {
+                /*
                 var installs = [];
                 var totalInstallments = window.checkoutConfig.payment[this.getCode()]['installments'];
 
@@ -98,6 +99,14 @@ define(
                 return _.map(installs, function (value, key) {
                     return {
                         value: value,
+                        installment: value,
+                    };
+                }); */
+
+                var installments = window.checkoutConfig.payment[this.getCode()]['installments'];
+                return _.map(installments, function (value, key) {
+                    return {
+                        value: key,
                         installment: value,
                     };
                 });

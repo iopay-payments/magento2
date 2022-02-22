@@ -120,8 +120,10 @@ class Creditcard extends \Magento\Payment\Model\Method\AbstractMethod
             throw new \Magento\Framework\Exception\LocalizedException(__('Cartão não criptografado, verifique os dados informados e tente novamente...'));
         }
 
+        $orderTotalWithInstallments = $this->_helper->getOrderTotalWithInstallments($order, $installments);
+
         $ccArray = array(
-            "amount"        => round($order->getGrandTotal(), 2) * 100,
+            "amount"        => round($orderTotalWithInstallments, 2) * 100,
             "currency"      => "BRL",
             "description"   => "Pedido {$order->getIncrementId()}",
             "token"         => $cardToken,
@@ -185,8 +187,11 @@ class Creditcard extends \Magento\Payment\Model\Method\AbstractMethod
 
             try {
                 $payment
+                    ->setAdditionalInformation("iopayPaymentId", $response['success']['id'])
                     ->setAdditionalInformation("iopayCreditCardId", $id)
-                    ->setAdditionalInformation("iopayCreditCardNumber", $cardFormatted)
+                    ->setAdditionalInformation("cc_installment", $id)
+                    ->setAdditionalInformation("iopayCreditCardNumber", $creditCard)
+                    ->setAdditionalInformation("iopayCreditCardNumberForm", $cardFormatted)
                     ->setAdditionalInformation("iopayResponse", json_encode($response['success']));
 
             } catch (Exception $e) {
