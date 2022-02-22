@@ -1,8 +1,8 @@
-# Modulo para Magento 2.x - IoPay
+# Modulo para Magento 2.x - IOPAY
 ![IoPay](https://static.iopay.dev/assets/img/capa_git.jpg)
 ## Documentação
 
-Este módulo para Magento 2.x permite integrar sua loja com a IoPay API.
+Este módulo para Magento 2.x permite integrar sua loja com a IOPAY API.
 
 Métodos de pagamento disponíveis:
 
@@ -36,7 +36,7 @@ Métodos de pagamento disponíveis:
 
 ## Configuração
 Todas as opção de configuração do módulo se encontram no painel administrativo
-Acesse o menu: `Lojas`/`Configurações`/`Vendas`/`Formas de pagamento`/`IoPay Pagamentos`
+Acesse o menu: `Lojas`/`Configurações`/`Vendas`/`Formas de pagamento`/`IOPAY Pagamentos`
 
 ## Webhook Callback Url
     $ seudominio.com.br/iopay/webhook
